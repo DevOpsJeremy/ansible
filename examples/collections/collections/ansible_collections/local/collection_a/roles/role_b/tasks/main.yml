@@ -1,0 +1,3 @@
+- name: Example task in my_namespace.collection_a.role_b
+  ansible.builtin.debug:
+    msg: This is an example task in the my_namespace.collection_a.role_b role

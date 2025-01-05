@@ -4,7 +4,7 @@
 #   be more secure than storing them in ~\.gitconfig or passing via username:password.
 - name: Set GIT credentials
   community.windows.win_credential:
-    name: git:https://{{ git_provider }}
+    name: git:https://{{ git_provider_fqdn }}
     type: generic_password
     username: "{{ user }}"
     secret: "{{ pass }}"
@@ -13,7 +13,7 @@
 
 - name: Set git configurations
   ansible.windows.win_powershell:
-    # Use the [Set-GitConfiguration.ps1](../scripts/windows/Set-GitConfiguration.ps1) script.
+    # Use the [Set-GitConfiguration.ps1](../../scripts/windows/Set-GitConfiguration.ps1) script.
     script: "{{ lookup('file', 'Set-GitConfiguration.ps1') }}"
     parameters:
       name: "{{ config.name }}"

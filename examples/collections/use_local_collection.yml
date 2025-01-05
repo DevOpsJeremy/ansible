@@ -1,0 +1,38 @@
+---
+# This play runs a local role by name
+- name: Run collection role(s)
+  hosts: all
+  tasks:
+    - name: Include role from local filesystem
+      # Looks for namespace(s) located in the
+      # collections/ansible_collections directory,
+      # relative to the current playbook
+      ansible.builtin.include_role:
+        name: "{{ role_name }}"
+      loop_control:
+        loop_var: role_name
+      loop:
+        # Under collections/ansible_collections, looks for
+        # the namespace "local". Within that, the collections:
+        #   - collection_a
+        #   - collection_b
+        # Each respective collection has a role directory containing
+        # the desired role.
+        - local.collection_a.role_a
+        - local.collection_a.role_b
+        - local.collection_b.role_a
+
+- name: Run the custom module
+  hosts: linux
+  tasks:
+    - name: Run the module
+      local.collection_b.my_test:
+        name: hello world
+        new: true
+
+- name: Run the custom module on Windows
+  hosts: windows
+  tasks:
+    - name: Run the module
+      local.collection_b.win_my_test:
+        name: fail me
